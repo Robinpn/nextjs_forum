@@ -70,7 +70,7 @@ export type Database = {
         Row: {
           body: string
           comments: number | null
-          created_at: string
+          created_at: string | null
           id: string
           likes: number | null
           title: string
@@ -79,7 +79,7 @@ export type Database = {
         Insert: {
           body: string
           comments?: number | null
-          created_at?: string
+          created_at?: string | null
           id?: string
           likes?: number | null
           title: string
@@ -88,7 +88,7 @@ export type Database = {
         Update: {
           body?: string
           comments?: number | null
-          created_at?: string
+          created_at?: string | null
           id?: string
           likes?: number | null
           title?: string
@@ -96,29 +96,37 @@ export type Database = {
         }
         Relationships: []
       }
-      Profile: {
+      profiles: {
         Row: {
-          created_at: string
-          email: string
+          email: string | null
+          has_liked_post: string | null
           id: string
-          name: string
-          password: string
+          user_id: string | null
+          user_name: string | null
         }
         Insert: {
-          created_at?: string
-          email: string
+          email?: string | null
+          has_liked_post?: string | null
           id?: string
-          name: string
-          password: string
+          user_id?: string | null
+          user_name?: string | null
         }
         Update: {
-          created_at?: string
-          email?: string
+          email?: string | null
+          has_liked_post?: string | null
           id?: string
-          name?: string
-          password?: string
+          user_id?: string | null
+          user_name?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_has_liked_post_fkey"
+            columns: ["has_liked_post"]
+            isOneToOne: false
+            referencedRelation: "Post"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
