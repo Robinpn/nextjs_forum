@@ -1,6 +1,15 @@
+import { log } from 'console';
 import { createClient } from './client';
 
-export async function insertLike(like: number, currentPost: string) {
+interface postData {
+  id: string;
+  title: string;
+  body: string;
+  likes?: number;
+  comments?: number;
+}
+
+export async function insertLike(postData: postData) {
   const supabase = createClient();
   const {
     data: { user },
@@ -11,12 +20,13 @@ export async function insertLike(like: number, currentPost: string) {
     return;
   }
 
-  console.log('user: ', user.id);
+  // @ts-ignore
+  const addLike = postData.likes + 1;
 
   const { error } = await supabase
     .from('Post')
-    .upsert({ likes: like, user_id: user.id })
-    .eq('id', currentPost);
+    .update({ likes: addLike })
+    .eq('id', postData.id);
 
   if (error) {
     console.log('error when adding like: ', error);

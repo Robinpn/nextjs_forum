@@ -32,6 +32,7 @@ export default async function PostId({
             id={post.id}
             title={post.title}
             body={post.body}
+            likes={post.likes}
           />
         );
       })}

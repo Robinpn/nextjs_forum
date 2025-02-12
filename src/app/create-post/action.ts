@@ -22,7 +22,7 @@ export async function createNewPost(formData: FormData) {
   const { error } = await supabase.from('Post').insert({
     title: insertData.title,
     body: insertData.body,
-    userId: insertData.userId,
+    user_id: insertData.userId,
   });
 
   if (error) {

@@ -39,32 +39,21 @@ export type Database = {
           body: string
           created_at: string
           id: number
-          post: string | null
           userId: string | null
         }
         Insert: {
           body: string
           created_at?: string
           id?: number
-          post?: string | null
           userId?: string | null
         }
         Update: {
           body?: string
           created_at?: string
           id?: number
-          post?: string | null
           userId?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "Comment_post_fkey"
-            columns: ["post"]
-            isOneToOne: false
-            referencedRelation: "Post"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       Post: {
         Row: {
@@ -72,61 +61,61 @@ export type Database = {
           comments: number | null
           created_at: string | null
           id: string
-          likes: number | null
+          likes: number
           title: string
-          userId: string | null
+          user_id: string | null
         }
         Insert: {
           body: string
           comments?: number | null
           created_at?: string | null
           id?: string
-          likes?: number | null
+          likes?: number
           title: string
-          userId?: string | null
+          user_id?: string | null
         }
         Update: {
           body?: string
           comments?: number | null
           created_at?: string | null
           id?: string
-          likes?: number | null
+          likes?: number
           title?: string
-          userId?: string | null
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "Post_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       profiles: {
         Row: {
           email: string | null
-          has_liked_post: string | null
+          has_liked_post: string[] | null
           id: string
           user_id: string | null
           user_name: string | null
         }
         Insert: {
           email?: string | null
-          has_liked_post?: string | null
+          has_liked_post?: string[] | null
           id?: string
           user_id?: string | null
           user_name?: string | null
         }
         Update: {
           email?: string | null
-          has_liked_post?: string | null
+          has_liked_post?: string[] | null
           id?: string
           user_id?: string | null
           user_name?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_has_liked_post_fkey"
-            columns: ["has_liked_post"]
-            isOneToOne: false
-            referencedRelation: "Post"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
