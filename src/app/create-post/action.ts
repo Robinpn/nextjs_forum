@@ -1,7 +1,12 @@
 'use server';
 import { createClient } from '../../../utils/supabase/server';
 
-export async function createNewPost(formData: FormData) {
+interface postData {
+  title: string;
+  body: string;
+}
+
+export async function createNewPost(formData: postData) {
   const supabase = await createClient();
 
   const {
@@ -9,24 +14,22 @@ export async function createNewPost(formData: FormData) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    console.log('no user is signed in');
-    return;
+    return {
+      error: 'you need an account in order to create posts',
+    };
   }
 
-  const insertData = {
-    userId: user.id,
-    title: formData.get('title') as string,
-    body: formData.get('body') as string,
-  };
+  try {
+    const { error } = await supabase.from('Post').insert({
+      title: formData.title,
+      body: formData.body,
+      user_id: user.id,
+    });
 
-  const { error } = await supabase.from('Post').insert({
-    title: insertData.title,
-    body: insertData.body,
-    user_id: insertData.userId,
-  });
-
-  if (error) {
-    console.log('error', error);
-    return;
+    if (error) throw error;
+  } catch (error) {
+    return {
+      error: 'failed to create posts',
+    };
   }
 }

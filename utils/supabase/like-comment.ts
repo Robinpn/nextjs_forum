@@ -23,14 +23,13 @@ export async function insertLike(postData: postData) {
       error: 'You need an account in order to like a post',
     };
   }
-
   // @ts-ignore
   const addLike = postData.likes + 1;
 
   try {
     const { error } = await supabase
       .from('Post')
-      .update({ likes: addLikes })
+      .update({ likes: addLike })
       .eq('id', postData.id);
 
     if (error) throw error;

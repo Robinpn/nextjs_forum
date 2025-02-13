@@ -17,6 +17,8 @@ const Post = (postData: postData) => {
 
     if (result?.error) {
       toast.error(result.error);
+    } else {
+      toast.success('like added');
     }
   };
   return (
