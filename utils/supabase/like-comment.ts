@@ -11,25 +11,33 @@ interface postData {
 
 export async function insertLike(postData: postData) {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
 
-  if (!user) {
-    console.log('You need to have an account in order to like a post');
-    return;
+    if (!user) throw error;
+  } catch (error) {
+    return {
+      error: 'You need an account in order to like a post',
+    };
   }
 
   // @ts-ignore
   const addLike = postData.likes + 1;
 
-  const { error } = await supabase
-    .from('Post')
-    .update({ likes: addLike })
-    .eq('id', postData.id);
+  try {
+    const { error } = await supabase
+      .from('Post')
+      .update({ likes: addLikes })
+      .eq('id', postData.id);
 
-  if (error) {
-    console.log('error when adding like: ', error);
+    if (error) throw error;
+  } catch (error) {
+    return {
+      error: 'failed to add like to post',
+    };
   }
 }
 

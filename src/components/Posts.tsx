@@ -27,6 +27,7 @@ export default async function Posts(limit: postOptions) {
             title={post.title}
             body={post.body}
             likes={post.likes}
+            comments={post.comments}
           />
         );
       })}
