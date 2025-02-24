@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { createClient } from './client';
 
 interface postData {
@@ -40,15 +39,28 @@ export async function insertLike(postData: postData) {
   }
 }
 
-// export async function comment(comment: string) {
-//   const supabase = await createClient();
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-//   if (!user) {
-//     console.log('You need to have an account in order to comment on a post');
-//     return;
-//   }
+export async function insertComment(comment: string, postData: postData) {
+  const supabase = await createClient();
 
-//   const { error } = await supabase.from('Post').insert({comments: comment})
-// }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      error: 'You need an account in order to comment',
+    };
+  }
+
+  try {
+    const { error } = await supabase
+      .from('Comment')
+      .insert({ body: comment, userId: user.id, postId: postData.id });
+
+    if (error) throw error;
+  } catch (error) {
+    return {
+      error: 'failed to upload comment',
+    };
+  }
+}
