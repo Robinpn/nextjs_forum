@@ -1,9 +1,13 @@
 'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import { insertLike, insertComment } from '../../utils/supabase/like-comment';
+import {
+  insertLike,
+  insertComment,
+} from '../../../utils/supabase/like-comment';
 import { ArrowBigUp, MessageCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { fetchComments } from './utils';
+
 interface postData {
   id: string;
   title: string;
@@ -13,6 +17,9 @@ interface postData {
 }
 
 const Post = (postData: postData) => {
+  const [comments, setComments] = React.useState<
+    { body: string; created_at: string; id: number; userId: string | null }[]
+  >([]);
   const [comment, setComment] = React.useState('');
 
   const handleLike = async () => {
@@ -36,6 +43,15 @@ const Post = (postData: postData) => {
 
     setComment('');
   };
+
+  React.useEffect(() => {
+    const loadComments = async () => {
+      const fetchedComments = await fetchComments(postData.id);
+      setComments(fetchedComments);
+    };
+    loadComments();
+  }, [postData.id]);
+
   return (
     <div className="flex flex-col gap-4 justify-center items-center min-w-96 min-h-48 border-2 rounded-md my-4">
       <h1>{postData.title}</h1>
@@ -66,6 +82,17 @@ const Post = (postData: postData) => {
         className="w-80 rounded-md border-2 border-slate-400 bg-transparent placeholder:text-slate-400 px-3 py-2 mb-4"
       ></textarea>
       <button onClick={handleComment}>Comment</button>
+      <div>
+        <h3>Comments</h3>
+        {comments.map((comment, index) => (
+          <div
+            key={index}
+            className="border-b-2 rounded-md py-2 px-4 border-gray-300 min-w-48 my-4"
+          >
+            <p>{comment.body}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
