@@ -4,7 +4,7 @@ import {
   insertLike,
   insertComment,
 } from '../../../utils/supabase/like-comment';
-import { ArrowBigUp, MessageCircle } from 'lucide-react';
+import { ArrowBigUp, MessageCircle, CircleUserRound } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { fetchComments } from './utils';
 
@@ -14,6 +14,7 @@ interface postData {
   body: string;
   likes?: number;
   comments?: number;
+  user_name?: string | null;
 }
 
 const Post = (postData: postData) => {
@@ -54,6 +55,10 @@ const Post = (postData: postData) => {
 
   return (
     <div className="flex flex-col gap-4 justify-center items-center min-w-96 min-h-48 border-2 rounded-md my-4">
+      <p className="flex gap-1">
+        {' '}
+        <CircleUserRound /> {postData.user_name}
+      </p>
       <h1>{postData.title}</h1>
       <p>{postData.body}</p>
       <div className="flex gap-2">

@@ -1,6 +1,5 @@
 'use server';
 import { createClient } from '../../utils/supabase/server';
-import Post from './post/Post';
 import PreviewPost from './PreviewPost';
 
 interface postOptions {
@@ -22,14 +21,6 @@ export default async function Posts(limit: postOptions) {
     <div>
       {data?.map((post) => {
         return (
-          // <Post
-          //   key={post.id}
-          //   id={post.id}
-          //   title={post.title}
-          //   body={post.body}
-          //   likes={post.likes}
-          //   comments={post.comments}
-          // />
           <PreviewPost
             key={post.id}
             id={post.id}

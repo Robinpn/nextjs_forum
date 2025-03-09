@@ -1,9 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { insertLike, insertComment } from '../../utils/supabase/like-comment';
 import { ArrowBigUp, MessageCircle, UserRound } from 'lucide-react';
-import { toast } from 'react-hot-toast';
 
 interface postData {
   id: string;
@@ -11,6 +9,7 @@ interface postData {
   body: string;
   likes?: number;
   comments?: number;
+  userName?: string;
 }
 
 const PreviewPost = (postData: postData) => {

@@ -19,9 +19,11 @@ export async function createNewPost(formData: postData) {
     };
   }
 
+  const correctedTitle = formData.title.replace(/\s+/g, '-'); // Regex to replace white space with a "-"
+
   try {
     const { error } = await supabase.from('Post').insert({
-      title: formData.title,
+      title: correctedTitle,
       body: formData.body,
       user_id: user.id,
     });

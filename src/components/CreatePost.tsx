@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 
 export const CreatePost = () => {
   const [formData, setFormData] = React.useState({ title: '', body: '' });
+
   const handleCreatePost = async () => {
     const result = await createNewPost(formData);
 
