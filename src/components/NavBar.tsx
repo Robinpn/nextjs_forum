@@ -8,7 +8,10 @@ const NavBar = () => {
         <Link href={'/'}>Home</Link>
         <Link href={'/create-post'}>Create</Link>
         <Link href={'/posts'}>Posts</Link>
-        <Link href={'/login'}>Account</Link>
+        <Link href={'/private'} replace>
+          {/* replace is necessary for middleware to run */}
+          Account
+        </Link>
       </ul>
     </div>
   );
