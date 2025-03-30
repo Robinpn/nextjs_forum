@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { redirect } from 'next/navigation';
 import { createClient } from '../../utils/supabase/client';
 import { CircleUser } from 'lucide-react';
+import LinkComponent from './LinkComponent';
 
 interface userType {
   email: string | null;
@@ -96,13 +97,11 @@ const UserUpdates = () => {
   };
 
   return (
-    <div className="bg-pink-300 min-h-52 min-w-52 flex flex-col gap-4 z-0 relative">
-      <div className="flex gap-1">
-        <CircleUser /> {user?.user_name}
-      </div>
+    <div className=" min-h-52 min-w-52 flex flex-col gap-4 z-0 relative text-lg">
+      <div className="flex gap-1"></div>
       {popup && <ConfirmModal />}
       <Button title="Logout" onClick={logoutUserClient} />
-      <Link href={'/reset'}>Forgot password?</Link>
+      <LinkComponent href={'/reset'} title="Reset password" />
       <Button title="Delete account" onClick={handleClick} />
     </div>
   );
