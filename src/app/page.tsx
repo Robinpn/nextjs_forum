@@ -5,12 +5,6 @@ export default async function Home() {
   return (
     <div className="h-screen w-full flex flex-col  items-center">
       <h1>Hello World</h1>
-      <div className="w-full h-12 flex justify-around my-4 mb-4">
-        <Link href={'/create-post'}>Top rated</Link>
-        <Link href={'/create-post'}>New</Link>
-        <Link href={'/create-post'}>tags</Link>
-        <Link href={'/create-post'}>Create post</Link>
-      </div>
       <div>
         <h3>Latest posts</h3>
         <Posts limit={3} />

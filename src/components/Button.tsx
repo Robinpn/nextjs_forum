@@ -3,7 +3,7 @@ import React from 'react';
 
 interface btn {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 const Button = (props: btn) => {
   return (
