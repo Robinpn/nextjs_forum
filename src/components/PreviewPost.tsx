@@ -22,12 +22,13 @@ const PreviewPost = (postData: postData) => {
   React.useEffect(() => {
     router.push(currentPath + '/' + postTitle);
   }, [postTitle]);
+
   return (
     <div
       onClick={() => {
         setPostTitle(postData.title);
       }}
-      className="flex flex-col gap-4 justify-center items-center min-w-96 min-h-48 border-2 rounded-md my-4 hover:cursor-pointer"
+      className="flex flex-col gap-4 justify-center items-center w-[37.5rem] h-[18.75rem] border-b-2 border-b-gray-700 rounded-2xl my-4 hover:cursor-pointer hover:border-2 hover:border-gray-700"
     >
       <h1>{postData.title}</h1>
       <p>{postData.body}</p>

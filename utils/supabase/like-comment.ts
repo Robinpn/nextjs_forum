@@ -1,6 +1,7 @@
 import { createClient } from './client';
 
 interface postData {
+  user_name: string;
   id: string;
   title: string;
   body: string;
@@ -53,9 +54,12 @@ export async function insertComment(comment: string, postData: postData) {
   }
 
   try {
-    const { error } = await supabase
-      .from('Comment')
-      .insert({ body: comment, userId: user.id, postId: postData.id });
+    const { error } = await supabase.from('Comment').insert({
+      user_name: postData.user_name,
+      body: comment,
+      userId: user.id,
+      postId: postData.id,
+    });
 
     if (error) throw error;
   } catch (error) {

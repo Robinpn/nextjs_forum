@@ -40,6 +40,7 @@ export type Database = {
           created_at: string
           id: string
           postId: string | null
+          user_name: string | null
           userId: string | null
         }
         Insert: {
@@ -47,6 +48,7 @@ export type Database = {
           created_at?: string
           id?: string
           postId?: string | null
+          user_name?: string | null
           userId?: string | null
         }
         Update: {
@@ -54,6 +56,7 @@ export type Database = {
           created_at?: string
           id?: string
           postId?: string | null
+          user_name?: string | null
           userId?: string | null
         }
         Relationships: [
@@ -64,6 +67,13 @@ export type Database = {
             referencedRelation: "Post"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "Comment_user_name_fkey"
+            columns: ["user_name"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_name"]
+          },
         ]
       }
       deletionRequests: {
@@ -71,29 +81,24 @@ export type Database = {
           created_at: string
           hasDeleted: boolean | null
           id: number
+          user_name: string | null
           userId: string | null
         }
         Insert: {
           created_at?: string
           hasDeleted?: boolean | null
           id?: number
+          user_name?: string | null
           userId?: string | null
         }
         Update: {
           created_at?: string
           hasDeleted?: boolean | null
           id?: number
+          user_name?: string | null
           userId?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "deletionRequests_userId_fkey"
-            columns: ["userId"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["user_id"]
-          },
-        ]
+        Relationships: []
       }
       Post: {
         Row: {

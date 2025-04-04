@@ -7,6 +7,8 @@ import {
 import { ArrowBigUp, MessageCircle, CircleUserRound } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { fetchComments } from './utils';
+import Button from '../Button';
+import Comment from '../Comment';
 
 interface postData {
   id: string;
@@ -19,12 +21,21 @@ interface postData {
 
 const Post = (postData: postData) => {
   const [comments, setComments] = React.useState<
-    { body: string; created_at: string; id: number; userId: string | null }[]
+    {
+      user_name: string;
+      body: string;
+      created_at: string;
+      id: number;
+      userId: string | null;
+    }[]
   >([]);
   const [comment, setComment] = React.useState('');
 
   const handleLike = async () => {
-    const result = await insertLike(postData);
+    const result = await insertLike({
+      ...postData,
+      user_name: postData.user_name || '',
+    });
 
     if (result?.error) {
       toast.error(result.error);
@@ -34,7 +45,10 @@ const Post = (postData: postData) => {
   };
 
   const handleComment = async () => {
-    const result = await insertComment(comment, postData);
+    const result = await insertComment(comment, {
+      ...postData,
+      user_name: postData.user_name || '',
+    });
 
     if (result?.error) {
       toast.error(result.error);
@@ -54,48 +68,56 @@ const Post = (postData: postData) => {
   }, [postData.id]);
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center min-w-96 min-h-48 border-2 rounded-md my-4">
-      <p className="flex gap-1">
-        {' '}
-        <CircleUserRound /> {postData.user_name}
-      </p>
-      <h1>{postData.title}</h1>
-      <p>{postData.body}</p>
-      <div className="flex gap-2">
-        <div className="flex p-2 bg-transparent border-2 rounded-md">
-          <button className="flex gap-1" onClick={handleLike}>
-            <ArrowBigUp color="white" />
-            {postData.likes}
-          </button>
-        </div>
-        <div className="flex gap-1 p-2 bg-transparent border-2 rounded-md">
-          <div className="flex gap-1">
-            <MessageCircle color="white" />
-            {postData.comments}
+    <div className="flex flex-col gap-4 min-w-[37.5rem] min-h-[18.75rem] ">
+      <div>
+        <p className="flex gap-1">
+          {' '}
+          <CircleUserRound /> {postData.user_name}
+        </p>
+      </div>
+      <div className="mt-4 flex flex-col justify-center items-center gap-4">
+        <h1 className="text-xl font-bold">{postData.title}</h1>
+        <p>{postData.body}</p>
+        <div className="flex gap-2 mt-8">
+          <div className="flex items-center justify-center p-1 bg-transparent rounded-md">
+            <button
+              className="flex gap-1 hover:bg-green-800 rounded-2xl px-4 py-2"
+              onClick={handleLike}
+            >
+              <ArrowBigUp color="white" size={20} />
+              {postData.likes}
+            </button>
+          </div>
+          <div className="flex gap-1 p-2 bg-transparent justify-center items-center">
+            <div className="flex gap-1">
+              <MessageCircle size={20} color="white" />
+              {postData.comments}
+            </div>
           </div>
         </div>
+        <div className="w-full">
+          <textarea
+            name="createComment"
+            id="createComment"
+            placeholder="Add a comment"
+            value={comment}
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+            rows={2}
+            className="w-full rounded-xl border-2 border-slate-600 bg-transparent placeholder:text-slate-400 px-3 py-2 mb-4"
+          ></textarea>
+          <Button title="Comment" onClick={handleComment} />
+        </div>
       </div>
-      <textarea
-        name="createComment"
-        id="createComment"
-        placeholder="Add a comment"
-        value={comment}
-        onChange={(e) => {
-          setComment(e.target.value);
-        }}
-        rows={2}
-        className="w-80 rounded-md border-2 border-slate-400 bg-transparent placeholder:text-slate-400 px-3 py-2 mb-4"
-      ></textarea>
-      <button onClick={handleComment}>Comment</button>
       <div>
         <h3>Comments</h3>
         {comments.map((comment, index) => (
-          <div
+          <Comment
             key={index}
-            className="border-b-2 rounded-md py-2 px-4 border-gray-300 min-w-48 my-4"
-          >
-            <p>{comment.body}</p>
-          </div>
+            userName={comment.user_name}
+            body={comment.body}
+          />
         ))}
       </div>
     </div>

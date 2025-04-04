@@ -35,7 +35,7 @@ export default async function PostId({
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center mt-8">
       {data?.map((post) => {
         return (
           <Post

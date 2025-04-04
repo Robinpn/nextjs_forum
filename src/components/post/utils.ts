@@ -7,7 +7,7 @@ export const fetchComments = async (postId: string) => {
 
   const { data, error } = await supabase
     .from('Comment')
-    .select('*')
+    .select('*, profiles (user_name)')
     .eq('postId', postId);
 
   if (error) {
