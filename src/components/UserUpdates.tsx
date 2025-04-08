@@ -60,6 +60,7 @@ const UserUpdates = () => {
   };
 
   const fetchUser = async () => {
+    console.log('fetchUser');
     const supabase = createClient();
     const { data } = await supabase.auth.getUser();
 
@@ -67,6 +68,8 @@ const UserUpdates = () => {
       console.log('no user was found');
       return;
     }
+
+    console.log(data.user.user_metadata?.user_name);
 
     setUser({
       // @ts-ignore
@@ -79,8 +82,10 @@ const UserUpdates = () => {
   };
 
   React.useEffect(() => {
+    console.log('useEffect');
+
     fetchUser();
-  }, [user]);
+  }, []);
 
   const ConfirmModal = () => {
     return (
@@ -98,6 +103,9 @@ const UserUpdates = () => {
 
   return (
     <div className=" min-h-52 min-w-52 flex flex-col gap-4 z-0 relative text-lg">
+      <div className="flex gap-2">
+        <CircleUser /> {user?.user_name}
+      </div>
       <div className="flex gap-1"></div>
       {popup && <ConfirmModal />}
       <Button title="Logout" onClick={logoutUserClient} />

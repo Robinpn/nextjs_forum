@@ -1,4 +1,5 @@
 import { createClient } from './client';
+import { fetchUser } from '@/app/private/utils';
 
 interface postData {
   user_name: string;
@@ -7,6 +8,14 @@ interface postData {
   body: string;
   likes?: number;
   comments?: number;
+}
+
+interface userType {
+  email: string;
+  has_liked_posts: string[];
+  id: string;
+  user_id: string;
+  user_name: string;
 }
 
 export async function insertLike(postData: postData) {
@@ -53,18 +62,22 @@ export async function insertComment(comment: string, postData: postData) {
     };
   }
 
+  console.log('user: ', user);
+
   try {
     const { error } = await supabase.from('Comment').insert({
-      user_name: postData.user_name,
+      // @ts-ignore
+      user_name: user.user_metadata.user_name,
       body: comment,
       userId: user.id,
       postId: postData.id,
     });
 
     if (error) throw error;
+    console.log(error);
   } catch (error) {
     return {
-      error: 'failed to upload comment',
+      error,
     };
   }
 }
