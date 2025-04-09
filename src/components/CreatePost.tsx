@@ -16,8 +16,9 @@ export const CreatePost = () => {
     }
   };
   return (
-    <div>
-      <form action="" className="flex flex-col gap-6 w-[720px]">
+    <div className="w-3/4 md:w-[720px]">
+      {/* w-[720px] */}
+      <form action="" className="flex flex-col gap-6 ">
         <input
           type="text"
           placeholder="Title"

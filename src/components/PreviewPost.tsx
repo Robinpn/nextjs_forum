@@ -28,7 +28,7 @@ const PreviewPost = (postData: postData) => {
       onClick={() => {
         setPostTitle(postData.title);
       }}
-      className="flex flex-col gap-4 justify-center items-center w-[37.5rem] h-[18.75rem] border-b-2 border-b-gray-700 rounded-2xl my-4 hover:cursor-pointer hover:border-2 hover:border-gray-700"
+      className="w-[23rem] min-h-[20rem] bg-red-600 flex flex-col gap-4 justify-center items-center border-b-2 border-b-gray-700 rounded-2xl my-4 hover:cursor-pointer hover:border-2 hover:border-gray-700 p-3 md:bg-blue-600 md:w-[37.5rem] md:h-[18.75rem]"
     >
       <h1>{postData.title}</h1>
       <p>{postData.body}</p>

@@ -68,7 +68,7 @@ const Post = (postData: postData) => {
   }, [postData.id]);
 
   return (
-    <div className="flex flex-col gap-4 min-w-[37.5rem] min-h-[18.75rem] ">
+    <div className="w-[23rem] min-h-[20rem] flex flex-col gap-4  md:bg-blue-600 md:w-[37.5rem] md:h-[18.75rem] p-3">
       <div>
         <p className="flex gap-1">
           {' '}

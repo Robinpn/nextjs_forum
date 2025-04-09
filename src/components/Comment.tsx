@@ -11,7 +11,7 @@ interface commentProps {
 
 const Comment = (props: commentProps) => {
   return (
-    <div className="flex flex-col gap-4 w-full min-h-14 border-b-2 border-slate-800 mt-4">
+    <div className="flex flex-col gap-4 w-full min-h-14 border-b-2 border-slate-800 mt-4 p-1">
       <div>
         <h2 className="flex gap-1">
           {' '}

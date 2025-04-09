@@ -1,5 +1,4 @@
 import { createClient } from './client';
-import { fetchUser } from '@/app/private/utils';
 
 interface postData {
   user_name: string;

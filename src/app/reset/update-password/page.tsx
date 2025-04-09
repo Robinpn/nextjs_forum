@@ -24,7 +24,10 @@ const page = () => {
   return (
     <div className="flex flex-col h-screen w-full items-center justify-center">
       {/* {error ? <Toaster position="top-center" toastOptions={{error: }}/> : toast.success(success)} */}
-      <form action={formAction} className="flex flex-col gap-4 bg-pink-300">
+      <form
+        action={formAction}
+        className="flex flex-col gap-4 just items-start"
+      >
         <label htmlFor="">New Password</label>
         <input type="password" name="password" required />
         <button type="submit" disabled={isPending}>
