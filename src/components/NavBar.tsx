@@ -20,7 +20,7 @@ const NavBar = () => {
         <ul className="flex justify-between mx-2 w-full">
           <Link href={'/'}>Home</Link>
           <Link href={'/create-post'}>Create</Link>
-          <Link href={'/posts'}>Posts</Link>
+          <Link href={'/about'}>About</Link>
           <Link href={'/private'} replace>
             {/* replace is necessary for middleware to run */}
             Account
