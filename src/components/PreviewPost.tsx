@@ -16,8 +16,22 @@ const PreviewPost = (postData: postData) => {
   const router = useRouter();
   const [postTitle, setPostTitle] = React.useState('');
 
+  const isMounted = React.useRef(false);
+
+  const handleClick = () => {
+    setPostTitle(postData.title);
+  };
+
   React.useEffect(() => {
-    router.push('posts' + '/' + postTitle);
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+
+    if (postTitle.length > 0) {
+      router.push('posts' + '/' + postTitle);
+    }
+    setPostTitle('');
   }, [postTitle]);
 
   return (
