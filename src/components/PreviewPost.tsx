@@ -18,10 +18,6 @@ const PreviewPost = (postData: postData) => {
 
   const isMounted = React.useRef(false);
 
-  const handleClick = () => {
-    setPostTitle(postData.title);
-  };
-
   React.useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
